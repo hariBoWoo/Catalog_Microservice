@@ -30,9 +30,10 @@ public class CatalogController {
 
     @GetMapping("/health_check")
     public String status(HttpServletRequest request){
-        return String.format("It's Working in Catalog Service on port $s", request.getServerPort());
+        return String.format("It's Working in Catalog Service on port %s", request.getServerPort());
     }
 
+    @GetMapping(value = "/catalogs")
     public ResponseEntity<List<ResponseCatalog>> getCatalogs(){
         Iterable<CatalogEntity> orderList = catalogService.getAllCatalogs();
 
