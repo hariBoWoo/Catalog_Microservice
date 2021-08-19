@@ -1,4 +1,4 @@
-package com.example.orderservice.dto;
+package com.example.orderservice.vo;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
@@ -12,7 +12,7 @@ public class ResponseOrder {
     private Integer qty;
     private Integer unitPrice;
     private Integer totalPrice;
+    private Date createdAt;
 
     private String orderId;
-    private Date createdAt;
 }
