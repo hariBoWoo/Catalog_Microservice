@@ -11,24 +11,24 @@ import org.springframework.stereotype.Service;
 @Service
 @Slf4j
 public class KafkaProducer {
-    private KafkaTemplate<String , String > kafkaTemplate;
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
-    public KafkaProducer(KafkaTemplate<String, String > kafkaTemplate){
+    public KafkaProducer(KafkaTemplate<String, String> kafkaTemplate) {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    public OrderDto send(String kafkaTopic, OrderDto orderDto){
+    public OrderDto send(String topic, OrderDto orderDto) {
         ObjectMapper mapper = new ObjectMapper();
-        String jsonInString = "";
-
+        String jsonInString  ="";
         try {
             jsonInString = mapper.writeValueAsString(orderDto);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        kafkaTemplate.send(kafkaTopic, jsonInString);
-        log.info("kafoka Producer send data from th order micoservide" + orderDto);
+
+        kafkaTemplate.send(topic, jsonInString);
+        log.info("Requested order was sent by Kafka Producer: " + jsonInString);
 
         return orderDto;
     }
