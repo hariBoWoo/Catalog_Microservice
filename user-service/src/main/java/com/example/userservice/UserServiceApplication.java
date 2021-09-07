@@ -9,6 +9,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @SpringBootApplication
 @EnableDiscoveryClient
@@ -33,5 +34,10 @@ public class UserServiceApplication {
     @Bean
     public Logger.Level feignLoggerLevel() {
         return Logger.Level.FULL;
+    }
+
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter(){
+        return new HiddenHttpMethodFilter();
     }
 }

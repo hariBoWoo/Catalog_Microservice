@@ -3,6 +3,7 @@ package com.example.userservice.controller;
 import com.example.userservice.dto.UserDto;
 import com.example.userservice.entity.UserEntity;
 import com.example.userservice.service.UserService;
+import com.example.userservice.vo.RequestUpdateUser;
 import com.example.userservice.vo.RequestUser;
 import com.example.userservice.vo.ResponseUser;
 import org.modelmapper.ModelMapper;
@@ -82,4 +83,32 @@ public class UserController {
 
         return ResponseEntity.status(HttpStatus.OK).body(returnValue);
     }
+
+    /* 사용자 탈퇴 */
+    @DeleteMapping("/users/{userId}")
+    public ResponseEntity<String> deleteUser(@PathVariable("userId") String userId){
+
+        String msg = "Done";
+        userService.deleteUser(userId);
+        return ResponseEntity.status(HttpStatus.OK).body(msg);
+    }
+
+    /* 유저 정보 수정*/
+    @PutMapping("/users/{userId}")
+    public void updateUser(@PathVariable("userId") String userId, @RequestBody @Valid RequestUpdateUser user){
+
+        ModelMapper mapper = new ModelMapper();
+        mapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
+        UserDto userDetails = mapper.map(user, UserDto.class);
+
+        UserDto userDto = userService.getUserByUserId(userId);
+
+        userService.updateByUserId(userDto, userDetails);
+
+    }
+
+
+
+
+
 }
